@@ -2,28 +2,24 @@
 level1_drop = "default:steelblock 10"
 ]]
 
-minetest.override_item("default:stone_with_coal", {
-	groups = {cracky=3, xp=1},
+minetest.override_item("mcl_core:stone_with_coal", {
+	groups = {pickaxey=3, xp=1},
 })
 
-minetest.override_item("default:stone_with_iron", {
-	groups = {cracky=2, xp=1},
+minetest.override_item("mcl_core:stone_with_iron", {
+	groups = {pickaxey=3, xp=1},
 })
 
-minetest.override_item("default:stone_with_copper", {
-	groups = {cracky=2, xp=1},
+minetest.override_item("mcl_core:stone_with_gold", {
+	groups = {pickaxey=4, xp=2},
 })
 
-minetest.override_item("default:stone_with_mese", {
-	groups = {cracky=1, xp=2},
+minetest.override_item("mcl_core:stone_with_diamond", {
+	groups = {pickaxey=4, xp=3},
 })
 
-minetest.override_item("default:stone_with_gold", {
-	groups = {cracky=2, xp=2},
-})
-
-minetest.override_item("default:stone_with_diamond", {
-	groups = {cracky=1, xp=3},
+minetest.override_item("mcl_core:stone_with_redstone", {
+	groups = {pickaxey=4, xp=3},
 })
 
 if minetest.get_modpath("moreores") ~= nil then
@@ -54,8 +50,7 @@ end
 
 local players = {}
 
-MAX_HUD_EXPERIENCE = 100
-
+MAX_HUD_EXPERIENCE = 85
 minetest.register_on_joinplayer(function(player)
 	local playerName = player:get_player_name()
 	players[playerName] = {
@@ -66,13 +61,13 @@ minetest.register_on_joinplayer(function(player)
 		exphudnumber = 0,
 		hud = player:hud_add({
 			hud_elem_type = "statbar",
-			texture = ("xp_blank"),
-			position = {x=0.5,y=1},
-			size = {x=20, y=20},
-			text = "orb.png",
+			texture = ("xp_empty.png"),
+			position = {x=0.468,y=0.99},  --x (left and right)
+			size = {x=20, y=15},
+			text = "xp_empty.png",
 			number = 40,
-			alignment = {x=0,y=1},
-			offset = {x=-200, y=-87},
+			alignment = {x=0,y=0},
+			offset = {x=-200, y=-75},
 		      }
 		),
 		
@@ -80,13 +75,13 @@ minetest.register_on_joinplayer(function(player)
 		hud2 = player:hud_add({
 		    hud_elem_type = "text",
                     name = "player_hud:time",
-					texture = ("xp_blank"),
-                    position = {x=0.5,y=1},
-                    text = "",
-                    scale = {x=2,y=2},
-                    alignment = {x=0,y=1},
+		    texture = (""),
+                    position = {x=0.474,y=1.04},
+                    text = "xp_empty.png",
+                    scale = {x=0,y=0},
+                    alignment = {x=0,y=0},
                     number = 0xFF0000, --0xFFFFFF,
-		    offset = {x=-160 , y=-65},
+		    offset = { x=(2*23)-9, y=-(48+24+16)}
 			}
 		),
 	}
@@ -276,7 +271,7 @@ end)
 minetest.register_entity("experience:orb", {
 	physical = true,
 	timer = 0,
-	textures = {"orb.png"},
+	textures = {name='orb.png', animation={type='vertical_frames', aspect_w=16, aspect_h=16, length=2.0}},
 	visual_size = {x=0.15, y=0.15},
 	collisionbox = {-0.17,-0.17,-0.17,0.17,0.17,0.17},
 	on_activate = function(self, staticdata)
